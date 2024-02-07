@@ -1,1 +1,24 @@
-:root {}
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --yu-primary: #d48f38;
+  --yu-light: white;
+  --yu-dark: #212529;
+}
+
+body {
+  background-color: var(--yu-primary);
+  font-family: 'Open Sans', sans-serif;
+}
+
+.container {
+  width: 70%;
+  background-color: var(--yu-light);
+  margin: auto;
+  margin-top: 10px;
+  padding: 10px;
+}
