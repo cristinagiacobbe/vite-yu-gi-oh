@@ -10,10 +10,12 @@ Create un nuovo progetto utilizzando Vite e Vue 3 e definite i componenti necess
 Al caricamento della pagina, effettuate una chiama ajax all'API di Yu Gi Oh:
 https://db.ygoprodeck.com/api/v7/cardinfo.php
 con i dati restituiti, stampate una card per ogni carta.
-:saetta: ATTENZIONE:
+
+ATTENZIONE:
 l’api restituisce tutti i risultati in un colpo solo.
 Per evitare attese e/o rallentamenti nelle richieste, potete diminuire il numero di risultati sfruttando i parametri num e offset
 https://db.ygoprodeck.com/api/v7/cardinfo.php?num=20&offset=0
-:simbolo_addizione_in_grassetto: Bonus:
+
+Bonus:
 Creare un componente loader da visualizzare fintantoché i risultati non sono pronti.
 Documentazione: https://ygoprodeck.com/api-guide/
