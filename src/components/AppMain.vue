@@ -1,7 +1,11 @@
 <script>
 import axios from 'axios'
+import AppCards from './AppCards.vue'
 export default {
     name: 'AppMain',
+    components: {
+        AppCards,
+    },
     data() {
         return {
             base_api_url: "https://db.ygoprodeck.com/api/v7/cardinfo.php?num=20&offset=20",
@@ -29,9 +33,8 @@ export default {
         </div>
         <div class="row">
             <div class="col-5" v-for="card in cards" :key="card.id + '_alien'">
-                <img :src="card.card_images[0].image_url" alt="">
-                <h4>{{ card.name }}</h4>
-                <h5>{{ card.archetype }}</h5>
+                <AppCards :CompCards="card"></AppCards>
+
             </div>
         </div>
     </div>
@@ -49,15 +52,6 @@ export default {
     padding: 0.5rem;
 }
 
-img {
-    width: 100%;
-}
-
-h4 {
-    color: var(--yu-light);
-    text-transform: uppercase;
-    text-align: center;
-}
 
 h5 {
     text-align: center;
