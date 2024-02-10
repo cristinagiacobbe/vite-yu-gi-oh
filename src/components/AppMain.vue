@@ -10,32 +10,53 @@ export default {
         return {
             base_api_url: "https://db.ygoprodeck.com/api/v7/cardinfo.php?num=20&offset=20",
             cards: [],
-
+            loading: true,
         };
-
     },
-
-    mounted() {
-        axios
-            .get("https://db.ygoprodeck.com/api/v7/cardinfo.php?num=20&offset=20")
-            .then((response) => {
-                console.log(response.data.data);
-                this.cards = response.data.data;
-                console.log(this.cards[0].card_images[0].image_url);
-            });
+    methods: {
+        getCards(ulr) {
+            axios
+                .get("https://db.ygoprodeck.com/api/v7/cardinfo.php?num=20&offset=20")
+                .then((response) => {
+                    console.log(response.data.data);
+                    this.cards = response.data.data;
+                    console.log(this.cards.length);
+                    console.log(this.cards[0].card_images[0].image_url);
+                    this.loading = false;
+                });
+        }
+    },
+    computed: {
+        getFound() {
+            return this.cards ? 'Found' + this.cards.lenght + 'cards' : 'No cards found'
+        }
+    },
+    created() {
+        setTimeout(() => {
+            this.getCards(this.base_api_url)
+        }, 3000)
     }
 };
 </script>
 <template>
     <div class="container">
         <div class="found">
-            <h4>Found 39 cards</h4>
+            <h4>{{ getFound }}</h4>
         </div>
-        <div class="row">
-            <div class="col-5" v-for="card in cards" :key="card.id + '_alien'">
-                <AppCards :CompCards="card"></AppCards>
+        <div class="row" v-if="loading">
 
+            <div class="loader">
+                <i class="fa-solid fa-spinner fa-spin"></i>
+                <div>loading...</div>
             </div>
+        </div>
+
+        <div class="row" v-else>
+
+            <div class="col-5" v-for="card in cards" :key="card.id + '_card'">
+                <AppCards :CompCards="card"></AppCards>
+            </div>
+
         </div>
     </div>
 </template>
