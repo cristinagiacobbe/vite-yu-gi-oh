@@ -1,10 +1,13 @@
 <script>
 import axios from 'axios'
 import AppCards from './AppCards.vue'
+import Loader from './Loader.vue'
+
 export default {
     name: 'AppMain',
     components: {
         AppCards,
+        Loader,
     },
     data() {
         return {
@@ -28,7 +31,7 @@ export default {
     },
     computed: {
         getFound() {
-            return this.cards ? 'Found' + this.cards.length + 'cards' : 'No cards found'
+            return this.cards ? 'Found ' + this.cards.length + ' cards' : 'No cards found'
         }
     },
     created() {
@@ -44,11 +47,7 @@ export default {
             <h4>{{ getFound }}</h4>
         </div>
         <div class="row" v-if="loading">
-
-            <div class="loader">
-                <i class="fa-solid fa-spinner fa-spin"></i>
-                <div>loading...</div>
-            </div>
+            <Loader></Loader>
         </div>
 
         <div class="row" v-else>
@@ -85,5 +84,6 @@ h5 {
 
 .found h4 {
     color: var(--yu-light);
+    padding: 5px;
 }
 </style>

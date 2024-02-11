@@ -14,7 +14,7 @@ export default {
 
 
 
-<style>
+<style scoped>
 img {
     width: 100%;
 }
