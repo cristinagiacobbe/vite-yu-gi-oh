@@ -28,7 +28,7 @@ export default {
     },
     computed: {
         getFound() {
-            return this.cards ? 'Found' + this.cards.lenght + 'cards' : 'No cards found'
+            return this.cards ? 'Found' + this.cards.length + 'cards' : 'No cards found'
         }
     },
     created() {
