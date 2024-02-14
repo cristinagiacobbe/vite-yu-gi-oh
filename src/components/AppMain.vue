@@ -53,7 +53,7 @@ export default {
 };
 </script>
 <template>
-    <ResultsFilter></ResultsFilter>
+    <ResultsFilter @filterInputTextComp="filterInputText()"></ResultsFilter>
 
 
     <div class="container">
