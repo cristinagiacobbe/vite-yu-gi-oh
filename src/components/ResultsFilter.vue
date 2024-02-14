@@ -1,0 +1,31 @@
+<script>
+export default {
+    name: 'ResultsFilter',
+    emits: ['filterInuptTextComp'],
+    data() {
+        return {
+            inputText: "",
+            selectedText: "",
+        }
+    }
+}
+
+
+</script>
+<template>
+    <div class="filters">
+        <input type="text" placeholder="Type here name's card" v-model="inputText"
+            @keypress.enter="$emit('filterInputTextComp')">
+
+        <select name="archetype" id="archetype" v-model="selectedText">
+            <option value="" selected>All</option>
+            <option value="ABC">ABC</option>
+            <option value="UMI">UMI</option>
+            <option value="Elemental hero">Elemental hero</option>
+            <option value="@Ignister">@Ignister</option>
+            <option value="A.I.">A.I.</option>
+        </select>
+
+    </div>
+</template>
+<style></style>

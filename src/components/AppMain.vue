@@ -2,31 +2,42 @@
 import axios from 'axios'
 import AppCards from './AppCards.vue'
 import Loader from './Loader.vue'
+import ResultsFilter from './ResultsFilter.vue'
 
 export default {
     name: 'AppMain',
     components: {
         AppCards,
         Loader,
+        ResultsFilter,
     },
     data() {
         return {
-            base_api_url: "https://db.ygoprodeck.com/api/v7/cardinfo.php?num=20&offset=20",
+            base_api_url: "https://db.ygoprodeck.com/api/v7/cardinfo.php",
+            base_api_url_short: "https://db.ygoprodeck.com/api/v7/cardinfo.php?num=20&offset=20",
             cards: [],
             loading: true,
+            inputText: "",
+            selectedText: "",
         };
     },
     methods: {
-        getCards(ulr) {
+        getCards(url) {
             axios
-                .get("https://db.ygoprodeck.com/api/v7/cardinfo.php?num=20&offset=20")
+                .get(url)
                 .then((response) => {
-                    console.log(response.data.data);
+                    //console.log(response.data.data);
                     this.cards = response.data.data;
-                    console.log(this.cards.length);
-                    console.log(this.cards[0].card_images[0].image_url);
+                    //console.log(this.cards.length);
+                    //console.log(this.cards[0].card_images[0].image_url);
                     this.loading = false;
                 });
+        },
+        filterInputText() {
+            const filterUrl = `${this.base_api_url}?name=${this.inputText}&archetype=${this.selectedText}`
+            console.log(filterUrl);
+            console.log(this.selectedText);
+            this.getCards(filterUrl);
         }
     },
     computed: {
@@ -36,12 +47,15 @@ export default {
     },
     created() {
         setTimeout(() => {
-            this.getCards(this.base_api_url)
+            this.getCards(this.base_api_url_short)
         }, 3000)
     }
 };
 </script>
 <template>
+    <ResultsFilter></ResultsFilter>
+
+
     <div class="container">
         <div class="found">
             <h4>{{ getFound }}</h4>
@@ -85,5 +99,12 @@ h5 {
 .found h4 {
     color: var(--yu-light);
     padding: 5px;
+}
+
+.filters {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    margin: 1rem;
 }
 </style>

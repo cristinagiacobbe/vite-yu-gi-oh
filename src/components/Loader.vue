@@ -15,7 +15,7 @@ export default {
 
 <style scoped>
 .loader {
-    height: 250px;
+    height: 50px;
     display: flex;
     justify-content: center;
     gap: 50px;
