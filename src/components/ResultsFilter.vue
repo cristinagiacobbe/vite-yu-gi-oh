@@ -15,7 +15,7 @@ export default {
 <template>
     <div class="filters">
         <input type="text" placeholder="Type here name's card" v-model="inputText"
-            @keypress.enter="$emit('filterInputTextComp'[inputText, selectedText])">
+            @keyup.enter="$emit('filterInputTextComp', [inputText, selectedText])">
 
         <select name="archetype" id="archetype" v-model="selectedText">
             <option value="" selected>All</option>

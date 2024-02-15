@@ -3,6 +3,7 @@ import axios from 'axios'
 import AppCards from './AppCards.vue'
 import Loader from './Loader.vue'
 import ResultsFilter from './ResultsFilter.vue'
+import { store } from '../store.js'
 
 export default {
     name: 'AppMain',
@@ -19,6 +20,7 @@ export default {
             loading: true,
             inputText: "",
             selectedText: "",
+            store
         };
     },
     methods: {
@@ -33,10 +35,10 @@ export default {
                     this.loading = false;
                 });
         },
-        filterInputText() {
-            const filterUrl = `${this.base_api_url}?name=${this.inputText}&archetype=${this.selectedText}`
+        filterInputText(data) {
+            const [inputText, selectedText] = data
+            const filterUrl = `${this.base_api_url}?name=${inputText}&archetype=${selectedText}`
             console.log(filterUrl);
-            console.log(this.selectedText);
             this.getCards(filterUrl);
         }
     },
@@ -53,10 +55,11 @@ export default {
 };
 </script>
 <template>
-    <ResultsFilter @filterInputTextComp="filterInputText()"></ResultsFilter>
+    <ResultsFilter @filterInputTextComp="filterInputText"></ResultsFilter>
 
 
     <div class="container">
+        <h1>{{ store.myName }}</h1>
         <div class="found">
             <h4>{{ getFound }}</h4>
         </div>
