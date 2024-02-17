@@ -3,6 +3,7 @@ import axios from 'axios'
 import AppCards from './AppCards.vue'
 import Loader from './Loader.vue'
 import ResultsFilter from './ResultsFilter.vue'
+import Found from './Found.vue'
 import { store } from '../store.js'
 
 export default {
@@ -11,45 +12,28 @@ export default {
         AppCards,
         Loader,
         ResultsFilter,
+        Found,
     },
     data() {
         return {
-            base_api_url: "https://db.ygoprodeck.com/api/v7/cardinfo.php",
-            base_api_url_short: "https://db.ygoprodeck.com/api/v7/cardinfo.php?num=20&offset=20",
-            cards: [],
-            loading: true,
             inputText: "",
             selectedText: "",
             store
         };
     },
     methods: {
-        getCards(url) {
-            axios
-                .get(url)
-                .then((response) => {
-                    //console.log(response.data.data);
-                    this.cards = response.data.data;
-                    //console.log(this.cards.length);
-                    //console.log(this.cards[0].card_images[0].image_url);
-                    this.loading = false;
-                });
-        },
+
         filterInputText(data) {
             const [inputText, selectedText] = data
-            const filterUrl = `${this.base_api_url}?name=${inputText}&archetype=${selectedText}`
+            const filterUrl = `${store.base_api_url}?name=${inputText}&archetype=${selectedText}`
             console.log(filterUrl);
-            this.getCards(filterUrl);
+            store.getCards(filterUrl);
         }
     },
-    computed: {
-        getFound() {
-            return this.cards ? 'Found ' + this.cards.length + ' cards' : 'No cards found'
-        }
-    },
+
     created() {
         setTimeout(() => {
-            this.getCards(this.base_api_url_short)
+            store.getCards(store.base_api_url_short)
         }, 3000)
     }
 };
@@ -59,17 +43,15 @@ export default {
 
 
     <div class="container">
-        <h1>{{ store.myName }}</h1>
-        <div class="found">
-            <h4>{{ getFound }}</h4>
-        </div>
-        <div class="row" v-if="loading">
+
+        <Found></Found>
+        <div class="row" v-if="store.loading">
             <Loader></Loader>
         </div>
 
         <div class="row" v-else>
 
-            <div class="col-5" v-for="card in cards" :key="card.id + '_card'">
+            <div class="col-5" v-for="card in store.cards" :key="card.id + '_card'">
                 <AppCards :CompCards="card"></AppCards>
             </div>
 
